@@ -1,4 +1,5 @@
 import { Controller, useForm } from "react-hook-form";
+import { isEmail } from "validator";
 import InputText from "./components/InputText";
 import Select from "./components/Select";
 import { createStaticDataGender } from "./utils";
@@ -29,9 +30,13 @@ export default () => {
                         name="email"
                         control={control}
                         defaultValue=""
-                        rules={{ required: true }}
+                        rules={{
+                            required: true,
+                            validate: { isEmailValid: (val) => isEmail(val) }
+                        }}
                         render={({ field }) => <InputText label="Email" {...field} />}
                     />
+                    {(errors.email && errors.email.type === "isEmailValid") && <span className="text-red">Format email masih salah</span>}
                     {(errors.email && errors.email.type === "required") && <span className="text-red">Mohon untuk mengisi email</span>}
                 </div>
                 <div>
