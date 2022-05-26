@@ -1,3 +1,4 @@
+import React from "react";
 import Select from 'react-select';
 import Label from "./Label";
 
@@ -23,7 +24,7 @@ const selectStyles = {
     })
 }
 
-export default (props) => {
+export default React.forwardRef((props, ref) => {
     const { value, onChange, options, label } = props;
 
     const found = options.find((x) => (String(x.value) === String(value)));
@@ -41,4 +42,4 @@ export default (props) => {
             />
         </div>
     )
-}
+});

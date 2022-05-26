@@ -1,6 +1,7 @@
+import React from "react";
 import Label from "./Label";
 
-export default (props) => {
+export default React.forwardRef((props, ref) => {
     const { value, onChange, label, placeholder } = props;
 
     const handleChangeValue = (e) => {
@@ -17,4 +18,4 @@ export default (props) => {
             />
         </div>
     )
-}
+});

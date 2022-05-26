@@ -1,52 +1,48 @@
-import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import InputText from "./components/InputText";
 import Select from "./components/Select";
 import { createStaticDataGender } from "./utils";
 
 export default () => {
-    const [formData, setFormData] = useState({ fullname: "", email: "", gender: "" });
+    const { control, handleSubmit, formState: { errors } } = useForm();
 
-    const handleSubmitData = (e) => {
-        e.preventDefault();
-        alert(JSON.stringify(formData));
-    }
-
-    const handleChangeData = (key, value) => {
-        const newFormData = {
-            ...formData,
-            [key]: value,
-        };
-
-        setFormData(newFormData);
-    }
+    const onSubmit = (formData) => { alert(JSON.stringify(formData)); }
 
     return (
         <div className="panel">
             <div className="panel-heading">
                 <h5>Formulir Pendaftaran</h5>
             </div>
-            <form onSubmit={handleSubmitData} className="panel-body">
+            <form onSubmit={handleSubmit(onSubmit)} className="panel-body">
                 <div>
-                    <InputText
-                        label="Nama Lengkap"
-                        value={formData.fullname}
-                        onChange={(val) => { handleChangeData("fullname", val) }}
+                    <Controller
+                        name="fullname"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: true }}
+                        render={({ field }) => <InputText label="Nama Lengkap" {...field} />}
                     />
+                    {(errors.fullname && errors.fullname.type === "required") && <span className="text-red">Mohon untuk mengisi nama lengkap</span>}
                 </div>
                 <div>
-                    <InputText
-                        label="Email"
-                        value={formData.email}
-                        onChange={(val) => { handleChangeData("email", val) }}
+                    <Controller
+                        name="email"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: true }}
+                        render={({ field }) => <InputText label="Email" {...field} />}
                     />
+                    {(errors.email && errors.email.type === "required") && <span className="text-red">Mohon untuk mengisi email</span>}
                 </div>
                 <div>
-                    <Select
-                        label="Jenis Kelamin"
-                        value={formData.gender}
-                        options={createStaticDataGender()}
-                        onChange={(val) => { handleChangeData("gender", val) }}
+                    <Controller
+                        name="gender"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: true }}
+                        render={({ field }) => <Select label="Jenis Kelamin" options={createStaticDataGender()} {...field} />}
                     />
+                    {(errors.gender && errors.gender.type === "required") && <span className="text-red">Mohon untuk memilih jenis kelamin</span>}
                 </div>
                 <button className="submit-button" type="submit">Kirim</button>
             </form>
