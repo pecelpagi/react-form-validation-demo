@@ -5,9 +5,6 @@ const customStyles = {
     container: base => ({
         ...base,
         width: '100%',
-    }),
-    control: base => ({
-        ...base,
     })
 };
 
