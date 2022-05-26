@@ -7,9 +7,6 @@ const customStyles = {
         ...base,
         width: '100%',
     }),
-    control: base => ({
-        ...base,
-    })
 };
 
 const selectStyles = {
